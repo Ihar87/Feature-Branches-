@@ -2,8 +2,7 @@
 
 stage 'Dev'
 node ('master') {
-    sh "sudo yum update -y"
-}
+    sh "pwd"
 
 stage name: 'Staging', concurrency: 1
 node ('Endeca') {
