@@ -19,21 +19,12 @@ node ('master') {
     }
     stage ('add tag') {
         if (env.BRANCH_NAME == 'master') {
-        println ("tagging")
-
-        sh("git config user.email ${repositoryCommiterEmail}")
-        sh("git config user.name '${repositoryCommiterUsername}'")
-
-        sh "git remote set-url origin git@github.com:..."
-
-        // deletes current snapshot tag
-        sh "git tag -d snapshot || true"
-        // tags current changeset
-        sh "git tag -a snapshot -m \"passed CI\""
-        // deletes tag on remote in order not to fail pushing the new one
-        sh "git push origin :refs/tags/snapshot"
-        // pushes the tags
-        sh "git push --tags"
+            println ("tagging")
+            sshagent (credentials: ['a88a27d1-858e-43ef-93dd-c3c2c68cdf96'])
+            sh "git tag -d ci-${JOB_BASE_NAME}-${BUILD_NUMBER} || true"
+            sh "git push origin :refs/tags/ci-${JOB_BASE_NAME}-${BUILD_NUMBER} || true"
+            sh "git tag -a ci-${JOB_BASE_NAME}-${BUILD_NUMBER} -m 'CI Tag'"
+            sh "git push origin refs/tags/ci-${JOB_BASE_NAME}-${BUILD_NUMBER}"
         }
     }
 }
