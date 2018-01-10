@@ -1,9 +1,12 @@
 #!groovy
 
 node ('master') {
-    stages {
-	stage('checkout scm'){
-	  checkout scm
-	}
-    }
+    checkout([
+         $class: 'GitSCM',
+         branches: [[name: '*/master']], 
+         doGenerateSubmoduleConfigurations: false, 
+     	 extensions: [], 
+    	 submoduleCfg: [], 
+    	 userRemoteConfigs: [[]]
+    ])
 }
