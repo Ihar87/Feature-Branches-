@@ -4,11 +4,17 @@ node ('master') {
     stage ('checkout scm') {
         checkout scm
     }
-    stage ('prepare platform') {
+    stage ('compilation checks') {
+        println ("load env vars")
         load "${WORKSPACE}/ci-variables.groovy"
-        sh '''
-              set
-              echo "${WORKSPACE}"
-           '''
+        println ("creating/removing symblink")
+        primtln ("ant build")
+    }
+    stage ('quality gates') {
+        println ("SQL verification")
+        println ("XML verification")
+        println ("JSP verification")
+        println ("Unit tests")
+        println ("Static code analysis for diff in commit")
     }
 }
