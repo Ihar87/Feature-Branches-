@@ -1,11 +1,9 @@
 #!groovy
 
-stage 'Dev'
 node ('master') {
-    sh "who am i"
+    stages {
+	stage('checkout scm'){
+	  checkout scm
+	}
+    }
 }
-stage name: 'Staging', concurrency: 1
-node ('Endeca') {
-    sh "who am i"
-}
-
