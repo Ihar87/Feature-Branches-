@@ -8,7 +8,7 @@ node ('master') {
         println ("load env vars")
         load "${WORKSPACE}/ci-variables.groovy"
         println ("creating/removing symblink")
-        primtln ("ant build")
+        println ("ant build")
     }
     stage ('quality gates') {
         println ("SQL verification")
